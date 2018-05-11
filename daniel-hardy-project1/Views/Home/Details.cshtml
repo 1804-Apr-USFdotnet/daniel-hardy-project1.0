@@ -1,0 +1,105 @@
+﻿@model Models.Resturant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Resturant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+
+        </dt>
+
+        <dd>
+            @Html.HiddenFor(model => model.rs_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FoodType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FoodType)
+        </dd>
+        <!--    Added code        -->
+        <dt>
+            Average Rating
+        </dt>
+        <!-- End  Added code        -->
+        <!--    Added code        -->
+        <dd>
+            @Model.getAverageRating()
+        </dd>
+        <!-- End  Added code        -->
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Update", "Update", new { id = Model.rs_id }) |
+    @Html.ActionLink("Back to List", "GetAll")
+
+    <table style="width:85%">
+        <thead>Reviews</thead>
+        <th>Author</th>
+        <th>Rating</th>
+        <th>Comment</th>
+        @foreach (var rev in Model.Reviews)
+        {
+            <tr>
+                <td>@rev.Author</td>
+                <td>@rev.Rating</td>
+                <td>@rev.Comment</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = rev.rv_id })</td>
+                <td>@Html.ActionLink("Delete", "DeleteReview", new { id = rev.rv_id })</td>
+            </tr>
+        }
+    </table>
+    @using (Html.BeginForm())
+    {
+        <h4>Enter a Review</h4>
+        <input type="hidden" id="rs_id" name="rs_id" value="@Model.rs_id" />
+        <input type="text" id="Author" name="Author" placeholder="Name" required />
+        <input type="text" id="Rating" name="Rating" placeholder="Rating" required />
+        <textarea id="Comment" name="Comment" placeholder="Comment on your experience" required></textarea>
+        <input type="submit" value="Submit" formaction="~/Home/AddReview" formmethod="post" />
+    }
+</p>
+
+
